@@ -1,0 +1,20 @@
+---
+- name: Play setup webserver
+  hosts: webservers
+  tasks:
+
+  - name: Ensure is installed httpd
+    ansible.builtin.yum:
+      name: httpd
+      state: present
+
+  - name: Ensure file exist index.html
+    ansible.builtin.copy:
+      src: files/index.html
+      dest: /var/www/html/index.html
+
+  - name: Ensure service httpd is starting and enabled
+    ansible.builtin.service:
+      name: httpd
+      state: started
+      enabled: true

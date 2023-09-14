@@ -1,0 +1,6 @@
+[control]
+localhost ansible_connection=local
+
+[intranet]
+vm-7-node2-ansible.example.com
+

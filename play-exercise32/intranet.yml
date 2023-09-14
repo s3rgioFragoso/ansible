@@ -1,0 +1,47 @@
+---
+- name: Install web server
+  hosts: intranet
+  become: true
+  tasks:
+
+    - name: Ensure lastest package httpd and firewall
+      ansible.builtin.yum:
+        name:
+          - httpd
+          - firewalld
+        state: latest
+
+    - name: Ensure enabled and running service firewalld
+      ansible.builtin.service:
+        name: firewalld
+        state: started
+        enabled: yes
+
+    - name: Open port 80
+      ansible.posix.firewalld:
+        service : http
+        permanent: true
+        state: enabled
+        immediate: true
+
+    - name: Start service httpd, if not started
+      ansible.builtin.service:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Copy index using inline content
+      ansible.builtin.copy:
+        content: 'Welcome to the example.com intranet!\n'
+        dest: /var/www/html/index.html
+
+- name: Test web server
+  hosts: localhost
+  tasks:
+
+    - name: Ensure response code return 200 is ok
+      ansible.builtin.uri:
+        url: http://vm-7-node2-ansible.example.com
+        method: GET
+        return_content: true
+        status_code: 200 

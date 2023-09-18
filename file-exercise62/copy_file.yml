@@ -1,0 +1,15 @@
+---
+- name: Use the copy module to copy files
+  hosts: servers
+  become: false
+  tasks:
+
+    - name: Copy a file to managed hosts and set attributes
+      ansible.builtin.copy:
+        src: files/users.txt
+        dest: /home/automation/users.txt
+        owner: automation
+        group: automation
+        mode: u+rw,g-wx,o-rwx
+        setype: samba_share_t
+

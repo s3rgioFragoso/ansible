@@ -1,0 +1,11 @@
+---
+- name: Use file module to delete files
+  hosts: servers
+  become: false
+  tasks:
+
+    - name: Remove a file from managed hosts
+      ansible.builtin.file:
+        path: users.txt
+        state: absent
+

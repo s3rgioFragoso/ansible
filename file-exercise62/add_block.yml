@@ -1,0 +1,14 @@
+---
+- name: Use the blockinfile module to insert/modify/delete text blocks
+  hosts: servers
+  become: false
+  tasks:
+
+    - name: Add block of text to a file
+      ansible.builtin.blockinfile:
+        path: users.txt
+        block: |
+          This block of text consists of two lines.
+          They have been added by the blockinfile module.
+        state: present
+

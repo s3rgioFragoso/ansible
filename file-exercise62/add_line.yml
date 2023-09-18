@@ -1,0 +1,11 @@
+- name: Use the lineinfile module to insert/modify/delete text lines
+  hosts: servers
+  become: false
+  tasks:
+
+  - name: Add text to an existing file
+    ansible.builtin.lineinfile:
+      path: /home/automation/users.txt
+      line: "This line was added by the lineinfile module."
+      state: present
+

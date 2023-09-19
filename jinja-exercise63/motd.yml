@@ -1,0 +1,15 @@
+---
+- hosts: webservers
+  user: automation
+  become: true
+  vars:
+    system_owner: sergio.fragoso@hsbc.com.mx
+
+  tasks:
+    - name: Install template motd.j2
+      ansible.builtin.template:
+        src: motd.j2
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: 0644
